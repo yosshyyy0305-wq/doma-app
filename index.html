@@ -16,12 +16,12 @@
     *{box-sizing:border-box}
     html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif}
     body{padding-bottom:24px}
-    .app{max-width:900px;margin:0 auto;padding:14px}
+    .app{max-width:960px;margin:0 auto;padding:14px}
     .panel,.card,.shape-panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
     .panel,.shape-panel,.card{padding:14px;margin-bottom:12px}
-    h1{margin:0 0 6px;font-size:22px}
+    h1{margin:0;font-size:22px}
     .sub{font-size:13px;color:var(--muted)}
-    .section-title{font-size:15px;font-weight:900;margin:0 0 10px}
+    .section-title{font-size:15px;font-weight:900;margin:0}
     .field{margin-bottom:12px}
     .field:last-child{margin-bottom:0}
     label{display:block;font-size:13px;font-weight:800;margin-bottom:6px}
@@ -31,11 +31,9 @@
     }
     input:focus, select:focus{border-color:var(--blue);box-shadow:0 0 0 4px rgba(31,111,214,.12)}
     .button-row,.sign-row,.quick-row,.card-actions{display:flex;gap:8px;flex-wrap:wrap}
+    .button-row .btn,.quick-row .btn,.sign-row .btn{flex:1}
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-    .summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .summary-full{grid-column:1 / -1}
-    .summary-layout{grid-template-columns:1fr 1fr}
+    .summary-layout{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     .summary-full{grid-column:1 / -1}
     .shape-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
     .btn,.shape-btn{
@@ -49,23 +47,16 @@
     .btn-danger{background:var(--danger-bg);color:var(--danger);border-color:var(--danger-line)}
     .btn.active{background:var(--blue-soft);border-color:#9dc3f8;color:var(--blue-dark)}
     .btn.full{width:100%}
-    .quick-row .btn,.button-row .btn,.sign-row .btn{flex:1}
-    .shape-btn{
-      display:flex;align-items:center;justify-content:space-between;
-      border-color:#9dc3f8;color:var(--blue)
-    }
+    .shape-btn{display:flex;align-items:center;justify-content:space-between;border-color:#9dc3f8;color:var(--blue)}
     .shape-left{display:flex;align-items:center;gap:8px;min-width:0}
     .shape-icon{font-size:17px;line-height:1}
     .unit-input{position:relative}
-    .unit-input input{padding-right:60px}
-    .unit{
-      position:absolute;right:14px;top:50%;transform:translateY(-50%);
-      font-size:13px;font-weight:800;color:var(--muted);pointer-events:none
-    }
+    .unit-input input{padding-right:68px}
+    .unit{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:800;color:var(--muted);pointer-events:none}
     .summary-box{border:1px solid var(--line);border-radius:14px;background:#f8fbff;padding:12px}
     .summary-box .k{font-size:12px;font-weight:800;color:var(--muted);margin-bottom:6px}
-    .summary-box .v{font-size:24px;font-weight:900}
-    .summary-box .s{font-size:13px;font-weight:800;color:var(--muted);margin-top:4px}
+    .summary-box .v{font-size:24px;font-weight:900;line-height:1.2}
+    .summary-box .s{font-size:13px;font-weight:800;color:var(--muted);margin-top:4px;min-height:18px}
     .summary-box .flag{display:inline-block;margin-top:6px;padding:4px 8px;border-radius:999px;background:#fff1d8;color:var(--warn);border:1px solid var(--warn-line);font-size:12px;font-weight:900}
     .cards{display:grid;gap:12px}
     .empty{text-align:center;padding:20px;border:1px dashed #adc7e8;border-radius:16px;background:rgba(255,255,255,.7);color:var(--muted);font-weight:800}
@@ -85,19 +76,18 @@
     .help{margin-top:10px;font-size:13px;font-weight:900;color:var(--warn)}
     .error{margin-top:10px;font-size:13px;font-weight:900;color:var(--danger);min-height:18px}
     .collapsed-body{display:none}
-    .hidden{display:none !important}
-    .inline-pair{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .hidden{display:none!important}
     .note{font-size:12px;color:var(--muted);margin-top:8px}
     @media (max-width:700px){
-      .grid-2,.grid-3,.stats-row{grid-template-columns:1fr}
-      .summary-grid,.summary-layout{grid-template-columns:1fr 1fr}
+      .grid-2,.stats-row{grid-template-columns:1fr}
+      .summary-layout{grid-template-columns:1fr 1fr}
+      .summary-full{grid-column:1 / -1}
       .card-header{flex-direction:column}
       .card-actions{width:100%}
       .card-actions .btn{flex:1}
     }
   </style>
 </head>
-
 <body>
   <div class="app">
     <div class="panel">
@@ -105,7 +95,7 @@
     </div>
 
     <div class="panel">
-      <div class="summary-grid">
+      <div class="summary-layout">
         <div class="summary-box summary-full">
           <div class="k">合計面積</div>
           <div class="v" id="totalArea">-- ㎡</div>
@@ -124,13 +114,13 @@
           <div class="k">中型車（3.5㎥）</div>
           <div class="v" id="mixer35Count">--</div>
           <div class="s" id="mixer35Cost"></div>
-          <div class="flag" id="mixer35Flag" style="display:none;">空積料適用</div>
+          <div class="flag hidden" id="mixer35Flag">空積料適用</div>
         </div>
         <div class="summary-box">
           <div class="k">立米車（1.5㎥）</div>
           <div class="v" id="mixer15Count">--</div>
           <div class="s" id="mixer15Cost"></div>
-          <div class="flag" id="mixer15Flag" style="display:none;">空積料適用</div>
+          <div class="flag hidden" id="mixer15Flag">空積料適用</div>
         </div>
 
         <div class="summary-box">
@@ -154,7 +144,6 @@
           <button id="modePer" class="btn" type="button">区画ごと</button>
         </div>
       </div>
-
       <div class="field" id="globalThicknessWrap">
         <label for="globalThickness">一括厚み</label>
         <div class="unit-input">
@@ -185,7 +174,7 @@
 
     <div class="panel">
       <div class="button-row" style="justify-content:space-between; align-items:center;">
-        <div class="section-title" style="margin:0;">金額設定</div>
+        <div class="section-title">金額設定</div>
         <button id="togglePriceBtn" class="btn btn-soft" type="button">開く</button>
       </div>
       <div id="pricePanelBody" class="hidden" style="margin-top:10px;">
@@ -222,7 +211,7 @@
           <div class="field">
             <label for="minQty35">中型車 最低数量</label>
             <div class="unit-input">
-              <input id="minQty35" type="number" inputmode="decimal" placeholder="3" />
+              <input id="minQty35" type="number" inputmode="decimal" placeholder="3.0" />
               <span class="unit">㎥</span>
             </div>
           </div>
@@ -273,16 +262,19 @@
         <button class="shape-btn" data-shape="triangle" type="button"><span class="shape-left"><span class="shape-icon">◺</span><span>三角形</span></span><span>追加</span></button>
         <button class="shape-btn" data-shape="trapezoid" type="button"><span class="shape-left"><span class="shape-icon">⏢</span><span>台形</span></span><span>追加</span></button>
         <button class="shape-btn" data-shape="heron" type="button"><span class="shape-left"><span class="shape-icon">△</span><span>ヘロン（3辺）</span></span><span>追加</span></button>
-        <button class="shape-btn" data-shape="manual" type="button"><span class="shape-left"><span class="shape-icon">✎</span><span>直接入力</span></span><span>追加</span></button>
+        <button class="shape-btn" data-shape="manualArea" type="button"><span class="shape-left"><span class="shape-icon">㎡</span><span>面積入力</span></span><span>追加</span></button>
+        <button class="shape-btn" data-shape="manualVolume" type="button"><span class="shape-left"><span class="shape-icon">㎥</span><span>体積入力</span></span><span>追加</span></button>
       </div>
     </div>
   </div>
 
-<script>
+  <script>
+    const STORAGE_KEY = 'doma_calc_price_only_v2';
+
     const shapeDefs = {
       rectangle: {
         label:'長方形', icon:'▭', helper:'縦 × 横',
-        fields:[{key:'l',label:'縦'},{key:'w',label:'横'}],
+        fields:[{key:'l',label:'縦',unit:'mm'},{key:'w',label:'横',unit:'mm'}],
         calc(v){
           const l=num(v.l), w=num(v.w);
           if(!positive(l)||!positive(w)) return {area:null};
@@ -291,7 +283,7 @@
       },
       triangle: {
         label:'三角形', icon:'◺', helper:'底辺 × 高さ（直角） ÷ 2',
-        fields:[{key:'b',label:'底辺'},{key:'h',label:'高さ（直角）'}],
+        fields:[{key:'b',label:'底辺',unit:'mm'},{key:'h',label:'高さ（直角）',unit:'mm'}],
         calc(v){
           const b=num(v.b), h=num(v.h);
           if(!positive(b)||!positive(h)) return {area:null};
@@ -300,7 +292,7 @@
       },
       trapezoid: {
         label:'台形', icon:'⏢', helper:'(上底 + 下底) × 高さ（直角） ÷ 2',
-        fields:[{key:'t',label:'上底'},{key:'b',label:'下底'},{key:'h',label:'高さ（直角）'}],
+        fields:[{key:'t',label:'上底',unit:'mm'},{key:'b',label:'下底',unit:'mm'},{key:'h',label:'高さ（直角）',unit:'mm'}],
         calc(v){
           const t=num(v.t), b=num(v.b), h=num(v.h);
           if(!positive(t)||!positive(b)||!positive(h)) return {area:null};
@@ -309,29 +301,34 @@
       },
       heron: {
         label:'ヘロン（3辺）', icon:'△', helper:'3辺で面積算出（ヘロン）',
-        fields:[{key:'a',label:'辺①'},{key:'b',label:'辺②'},{key:'c',label:'辺③'}],
+        fields:[{key:'a',label:'辺①',unit:'mm'},{key:'b',label:'辺②',unit:'mm'},{key:'c',label:'辺③',unit:'mm'}],
         calc(v){
           const a=num(v.a), b=num(v.b), c=num(v.c);
           if(![a,b,c].every(positive)) return {area:null};
-          const area=heron(a,b,c);
+          const area=heronArea(a,b,c);
           if(area==null) return {area:null,error:'三角形が成立しません。辺の長さを確認してください。'};
           return {area};
         }
-      }
-    };
-
-      manual: {
-        label:'直接入力', icon:'✎', helper:'面積と体積を直接入力',
-        fields:[{key:'area',label:'面積',unit:'㎡'},{key:'volume',label:'体積',unit:'㎥'}],
+      },
+      manualArea: {
+        label:'面積入力', icon:'㎡', helper:'面積を直接入力',
+        fields:[{key:'area',label:'面積',unit:'㎡'}],
         calc(v){
-          const area = num(v.area), volume = num(v.volume);
-          if(!positive(area) && !positive(volume)) return {area:null, volume:null};
-          return {
-            area: positive(area) ? area : 0,
-            manualVolume: positive(volume) ? volume : 0
-          };
+          const area=num(v.area);
+          if(!positive(area)) return {area:null};
+          return {area};
         }
       },
+      manualVolume: {
+        label:'体積入力', icon:'㎥', helper:'体積を直接入力',
+        fields:[{key:'volume',label:'体積',unit:'㎥'}],
+        calc(v){
+          const volume=num(v.volume);
+          if(!positive(volume)) return {manualVolume:null};
+          return {manualVolume:volume};
+        }
+      }
+    };
 
     const state = {
       thicknessMode:'global',
@@ -372,16 +369,16 @@
       totalArea: document.getElementById('totalArea'),
       totalVolume: document.getElementById('totalVolume'),
       totalWithWaste: document.getElementById('totalWithWaste'),
+      mixer35Count: document.getElementById('mixer35Count'),
+      mixer35Cost: document.getElementById('mixer35Cost'),
+      mixer35Flag: document.getElementById('mixer35Flag'),
+      mixer15Count: document.getElementById('mixer15Count'),
+      mixer15Cost: document.getElementById('mixer15Cost'),
+      mixer15Flag: document.getElementById('mixer15Flag'),
       meshCount: document.getElementById('meshCount'),
+      meshCost: document.getElementById('meshCost'),
       spacerCount: document.getElementById('spacerCount'),
       spacerCost: document.getElementById('spacerCost'),
-      mixer15Count: document.getElementById('mixer15Count'),
-      mixer35Count: document.getElementById('mixer35Count'),
-      meshCost: document.getElementById('meshCost'),
-      mixer15Cost: document.getElementById('mixer15Cost'),
-      mixer35Cost: document.getElementById('mixer35Cost'),
-      mixer15Flag: document.getElementById('mixer15Flag'),
-      mixer35Flag: document.getElementById('mixer35Flag'),
       saveBtn: document.getElementById('saveBtn'),
       loadBtn: document.getElementById('loadBtn'),
       resetBtn: document.getElementById('resetBtn')
@@ -392,7 +389,7 @@
     function positive(v){ return typeof v === 'number' && Number.isFinite(v) && v > 0; }
     function mm2ToM2(v){ return v / 1000000; }
     function mmToM(v){ return v / 1000; }
-    function heron(aMm,bMm,cMm){
+    function heronArea(aMm,bMm,cMm){
       const a=mmToM(aMm), b=mmToM(bMm), c=mmToM(cMm);
       if(a+b<=c || a+c<=b || b+c<=a) return null;
       const s=(a+b+c)/2;
@@ -410,29 +407,36 @@
       const def=shapeDefs[shape.type];
       const result=def.calc(shape.values || {});
       const area=result.area ?? null;
-      if(shape.type === 'manual'){
-        const volume = result.manualVolume ?? null;
-        return {area, volume, manualVolume: volume, error: result.error || ''};
+
+      if(shape.type === 'manualVolume'){
+        return { area:null, volume: result.manualVolume ?? null, error: result.error || '' };
       }
+
       const thickness=effectiveThickness(shape);
       const volume=area != null && positive(thickness) ? area * mmToM(thickness) : null;
-      return {area, volume, error: result.error || ''};
+      return { area, volume, error: result.error || '' };
     }
 
     function validateShape(shape){
       const def=shapeDefs[shape.type];
-      if(shape.type === 'manual'){
-        const a = num(shape.values.area), v = num(shape.values.volume);
-        if(!positive(a) && !positive(v)) return '直接入力は面積か体積のどちらかを入力してください。';
-        return '';
-      }
+
       for(const f of def.fields){
-        if(!positive(num(shape.values[f.key]))) return `${def.label}の必要な寸法をすべて入力してください。`;
+        if(!positive(num(shape.values[f.key]))) return `${def.label}の必要な数値を入力してください。`;
       }
-      if(state.thicknessMode === 'per' && !positive(num(shape.thickness))) return '厚みを入力してください。';
+
+      if(shape.type !== 'manualVolume' && state.thicknessMode === 'per' && !positive(num(shape.thickness))){
+        return '厚みを入力してください。';
+      }
+
       const calc=recalcShape(shape);
       if(calc.error) return calc.error;
-      if(calc.area == null) return `${def.label}の寸法を確認してください。`;
+
+      if(shape.type === 'manualVolume'){
+        if(calc.volume == null) return '体積を入力してください。';
+      } else {
+        if(calc.area == null) return `${def.label}の数値を確認してください。`;
+      }
+
       return '';
     }
 
@@ -440,16 +444,20 @@
       const def=shapeDefs[type];
       const values={};
       def.fields.forEach(f => values[f.key]='');
+
       state.shapes.push({
         id:uid(),
         type,
         sign:1,
         values,
-        thickness: state.thicknessMode === 'per' ? 100 : '',
+        thickness:(state.thicknessMode === 'per' && type !== 'manualVolume') ? 100 : '',
         registered:false,
-        collapsed:false
+        collapsed:false,
+        errorMessage:''
       });
+
       renderAll();
+
       requestAnimationFrame(() => {
         const card=els.cards.lastElementChild;
         if(card){
@@ -465,9 +473,7 @@
         <div class="field">
           <label>${f.label}</label>
           <div class="unit-input">
-            <input type="number" inputmode="decimal" placeholder="0"
-              value="${escapeAttr(shape.values[f.key] ?? '')}"
-              data-action="field" data-id="${shape.id}" data-key="${f.key}">
+            <input type="number" inputmode="decimal" placeholder="0" value="${escapeAttr(shape.values[f.key] ?? '')}" data-action="field" data-id="${shape.id}" data-key="${f.key}">
             <span class="unit">${f.unit || 'mm'}</span>
           </div>
         </div>
@@ -479,6 +485,10 @@
       const card=document.createElement('div');
       card.className='card';
       card.dataset.id=shape.id;
+
+      const addLabel = shape.type === 'manualVolume' ? '＋ 体積を足す' : '＋ 面積を足す';
+      const subLabel = shape.type === 'manualVolume' ? '－ 体積を引く' : '－ 面積を引く';
+
       card.innerHTML = `
         <div class="card-header">
           <div>
@@ -496,20 +506,19 @@
 
         <div class="card-body">
           <div class="sign-row">
-            <button class="btn sign-add ${shape.sign === 1 ? 'active' : ''}" type="button" data-action="setAdd" data-id="${shape.id}">＋ 面積を足す</button>
-            <button class="btn sign-sub ${shape.sign === -1 ? 'active' : ''}" type="button" data-action="setSubtract" data-id="${shape.id}">－ 面積を引く</button>
+            <button class="btn sign-add ${shape.sign === 1 ? 'active' : ''}" type="button" data-action="setAdd" data-id="${shape.id}">${addLabel}</button>
+            <button class="btn sign-sub ${shape.sign === -1 ? 'active' : ''}" type="button" data-action="setSubtract" data-id="${shape.id}">${subLabel}</button>
           </div>
 
           <div class="grid-2" style="margin-top:10px;">
             ${createFieldsHtml(shape, def)}
           </div>
 
-          <div class="per-thickness-wrap" style="display:${state.thicknessMode === 'per' && shape.type !== 'manual' ? '' : 'none'}; margin-top:${state.thicknessMode === 'per' && shape.type !== 'manual' ? '8px' : '0'};">
+          <div class="per-thickness-wrap" style="display:${state.thicknessMode === 'per' && shape.type !== 'manualVolume' ? '' : 'none'}; margin-top:${state.thicknessMode === 'per' && shape.type !== 'manualVolume' ? '8px' : '0'};">
             <div class="field">
               <label>厚み</label>
               <div class="unit-input">
-                <input type="number" inputmode="numeric" pattern="[0-9]*" placeholder="100"
-                  value="${escapeAttr(shape.thickness ?? '')}" data-action="thickness" data-id="${shape.id}">
+                <input type="number" inputmode="numeric" pattern="[0-9]*" placeholder="100" value="${escapeAttr(shape.thickness ?? '')}" data-action="thickness" data-id="${shape.id}">
                 <span class="unit">mm</span>
               </div>
             </div>
@@ -529,6 +538,7 @@
           </div>
         </div>
       `;
+
       refreshCard(card, shape);
       return card;
     }
@@ -540,10 +550,10 @@
       const thickness=effectiveThickness(shape);
 
       card.classList.toggle('unregistered', !shape.registered);
-      const body=card.querySelector('.card-body');
-      body.classList.toggle('collapsed-body', !!(shape.registered && shape.collapsed));
+      card.querySelector('.card-body').classList.toggle('collapsed-body', !!(shape.registered && shape.collapsed));
 
       card.querySelector('.card-title').textContent=`区画${getDisplayNo(shape.id)}`;
+
       const badge=card.querySelector('.status-badge');
       badge.className=`badge ${shape.registered ? 'ok' : 'warn'} status-badge`;
       badge.textContent=shape.registered ? '登録済み' : '未登録・合計未反映';
@@ -553,17 +563,15 @@
 
       card.querySelector('.area-value').textContent=formatSignedArea(signedArea);
       card.querySelector('.volume-value').textContent=formatSignedVolume(signedVolume);
-      card.querySelector('.thickness-value').textContent = shape.type === 'manual'
-        ? '厚み: 直接入力'
+
+      card.querySelector('.thickness-value').textContent = shape.type === 'manualVolume'
+        ? '厚み: 不要'
         : `厚み: ${positive(thickness) ? `${Number(thickness)} mm` : '-- mm'}`;
 
       const compact=card.querySelector('.compact-line');
       if(shape.registered){
-        if(shape.type === 'manual'){
-          const parts = [];
-          if(calc.area != null && calc.area !== 0) parts.push(`面積 ${formatSignedArea(signedArea)}`);
-          if(calc.volume != null && calc.volume !== 0) parts.push(`体積 ${formatSignedVolume(signedVolume)}`);
-          compact.textContent = parts.join(' / ');
+        if(shape.type === 'manualVolume'){
+          compact.textContent = `体積 ${formatSignedVolume(signedVolume)}`;
         } else {
           compact.textContent = state.thicknessMode === 'per'
             ? `面積 ${formatSignedArea(signedArea)} / 厚み ${positive(thickness) ? `${Number(thickness)} mm` : '-- mm'}`
@@ -577,15 +585,15 @@
       toggleBtn.textContent = shape.registered && shape.collapsed ? '開く' : '閉じる';
       toggleBtn.disabled = !shape.registered;
 
-      card.querySelector('.help-text').textContent = shape.registered ? '' : 'この区画はまだ合計に入っていません。寸法を確認して登録してください。';
-      card.querySelector('.error-text').textContent = calc.error || '';
+      card.querySelector('.help-text').textContent = shape.registered ? '' : 'この区画はまだ合計に入っていません。数値を確認して登録してください。';
+      card.querySelector('.error-text').textContent = shape.errorMessage || calc.error || '';
 
       const registerBtn=card.querySelector('.register-btn');
       if(shape.registered){
         registerBtn.textContent = `✔ 登録済み（${shapeDefs[shape.type].label}）`;
         registerBtn.classList.remove('btn-blue');
         registerBtn.classList.add('btn-soft');
-      }else{
+      } else {
         registerBtn.textContent = `${shapeDefs[shape.type].icon} ${shapeDefs[shape.type].label}を登録`;
         registerBtn.classList.add('btn-blue');
         registerBtn.classList.remove('btn-soft');
@@ -593,8 +601,8 @@
     }
 
     function renderAll(){
-      els.globalThickness.value = state.globalThickness ?? '';
-      els.wasteRate.value = String(state.wasteRate);
+      els.globalThickness.value = state.globalThickness ?? 100;
+      els.wasteRate.value = String(state.wasteRate ?? 0);
       els.priceMixer15.value = state.priceMixer15 ?? 38600;
       els.priceMixer35.value = state.priceMixer35 ?? 36100;
       els.priceMesh.value = state.priceMesh ?? '';
@@ -603,37 +611,58 @@
       els.emptyFee35.value = state.emptyFee35 ?? 2000;
       els.minQty15.value = state.minQty15 ?? 1.25;
       els.minQty35.value = state.minQty35 ?? 3;
-      els.pricePanelBody.classList.toggle('hidden', !state.pricePanelOpen);
-      els.togglePriceBtn.textContent = state.pricePanelOpen ? '閉じる' : '開く';
+
       els.modeGlobal.classList.toggle('active', state.thicknessMode === 'global');
       els.modePer.classList.toggle('active', state.thicknessMode === 'per');
       els.globalThicknessWrap.style.display = state.thicknessMode === 'global' ? '' : 'none';
-      els.quickButtons.forEach(btn => btn.classList.toggle('active', Number(btn.dataset.thickness) === Number(state.globalThickness)));
 
-      els.cards.innerHTML='';
+      els.pricePanelBody.classList.toggle('hidden', !state.pricePanelOpen);
+      els.togglePriceBtn.textContent = state.pricePanelOpen ? '閉じる' : '開く';
+
+      els.quickButtons.forEach(btn => {
+        btn.classList.toggle('active', Number(btn.dataset.thickness) === Number(state.globalThickness));
+      });
+
+      els.cards.innerHTML = '';
       els.emptyState.style.display = state.shapes.length ? 'none' : 'block';
       state.shapes.forEach(shape => els.cards.appendChild(createCard(shape)));
+
       refreshTotals();
     }
 
-    
-function refreshTotals(){
-      let totalArea=0, totalVolume=0, areaCount=0, volumeCount=0, manualVolumeOnly=0;
+    function refreshTotals(){
+      let totalArea=0;
+      let totalVolume=0;
+      let areaCount=0;
+      let volumeCount=0;
+      let manualVolumeOnly=0;
+
       state.shapes.forEach(shape => {
         if(!shape.registered) return;
         const calc=recalcShape(shape);
         if(calc.error) return;
-        if(calc.area != null){ totalArea += calc.area * shape.sign; areaCount++; }
-        if(calc.volume != null){ totalVolume += calc.volume * shape.sign; volumeCount++; }
-        if(shape.type === 'manual' && calc.volume != null){ manualVolumeOnly += calc.volume * shape.sign; }
+
+        if(calc.area != null){
+          totalArea += calc.area * shape.sign;
+          areaCount++;
+        }
+        if(calc.volume != null){
+          totalVolume += calc.volume * shape.sign;
+          volumeCount++;
+        }
+        if(shape.type === 'manualVolume' && calc.volume != null){
+          manualVolumeOnly += calc.volume * shape.sign;
+        }
       });
+
       const areaDisplay = areaCount ? totalArea : null;
       const volumeDisplay = volumeCount ? totalVolume : null;
-      const withWaste = volumeDisplay != null ? volumeDisplay * (1 + Number(state.wasteRate)/100) : null;
+      const withWaste = volumeDisplay != null ? volumeDisplay * (1 + Number(state.wasteRate) / 100) : null;
+      const orderedQty = withWaste != null && withWaste > 0 ? Math.ceil(withWaste / 0.25) * 0.25 : null;
 
       const meshCount = areaDisplay != null ? Math.ceil(Math.abs(areaDisplay) / 1.8) : null;
       const spacerCount = areaDisplay != null ? Math.ceil(Math.abs(areaDisplay) * 1.5) : null;
-      const orderedQty = withWaste != null ? Math.ceil(withWaste / 0.25) * 0.25 : null;
+
       const mixer15Count = orderedQty != null ? (orderedQty / 1.5).toFixed(1) : null;
       const mixer35Count = orderedQty != null ? (orderedQty / 3.5).toFixed(1) : null;
 
@@ -646,41 +675,44 @@ function refreshTotals(){
       const spacerCost = positive(num(state.priceSpacer)) && spacerCount != null ? spacerCount * Number(state.priceSpacer) : null;
 
       let mixer15Cost = null;
-      if (positive(num(state.priceMixer15)) && orderedQty != null) {
+      if(positive(num(state.priceMixer15)) && orderedQty != null){
         mixer15Cost = orderedQty * Number(state.priceMixer15);
-        if (emptyApplied15 && positive(num(state.emptyFee15))) {
+        if(emptyApplied15 && positive(num(state.emptyFee15))){
           mixer15Cost += Number(state.emptyFee15);
         }
       }
 
       let mixer35Cost = null;
-      if (positive(num(state.priceMixer35)) && orderedQty != null) {
+      if(positive(num(state.priceMixer35)) && orderedQty != null){
         let unit35 = Number(state.priceMixer35);
-        if (emptyApplied35 && positive(num(state.emptyFee35))) {
+        if(emptyApplied35 && positive(num(state.emptyFee35))){
           unit35 += Number(state.emptyFee35);
         }
         mixer35Cost = orderedQty * unit35;
       }
 
-      const areaText = areaDisplay == null && manualVolumeOnly === 0
+      const areaText = (areaDisplay == null && manualVolumeOnly === 0)
         ? '-- ㎡'
-        : manualVolumeOnly !== 0
-          ? `${formatSignedArea(areaDisplay == null ? 0 : areaDisplay)} + ${formatSignedVolume(manualVolumeOnly)}`
-          : formatSignedArea(areaDisplay);
+        : (manualVolumeOnly !== 0
+            ? `${formatSignedArea(areaDisplay == null ? 0 : areaDisplay)} + ${formatSignedVolume(manualVolumeOnly)}`
+            : formatSignedArea(areaDisplay));
 
       els.totalArea.textContent = areaText;
       els.totalVolume.textContent = formatVolume(volumeDisplay);
       els.totalWithWaste.textContent = withWaste == null ? '-- m³' : `${formatVolume(withWaste)} (${state.wasteRate}%)`;
+
+      els.mixer35Count.textContent = mixer35Count != null ? `${mixer35Count} 台` : '--';
+      els.mixer15Count.textContent = mixer15Count != null ? `${mixer15Count} 台` : '--';
       els.meshCount.textContent = formatCount(meshCount, ' 枚');
       els.spacerCount.textContent = formatCount(spacerCount, ' 個');
-      els.mixer15Count.textContent = mixer15Count != null ? `${mixer15Count} 台` : '--';
-      els.mixer35Count.textContent = mixer35Count != null ? `${mixer35Count} 台` : '--';
+
+      els.mixer35Cost.textContent = mixer35Cost == null ? '' : `金額 ${formatYen(mixer35Cost)}`;
+      els.mixer15Cost.textContent = mixer15Cost == null ? '' : `金額 ${formatYen(mixer15Cost)}`;
       els.meshCost.textContent = meshCost == null ? '' : `金額 ${formatYen(meshCost)}`;
       els.spacerCost.textContent = spacerCost == null ? '' : `金額 ${formatYen(spacerCost)}`;
-      els.mixer15Cost.textContent = mixer15Cost == null ? '' : `金額 ${formatYen(mixer15Cost)}`;
-      els.mixer35Cost.textContent = mixer35Cost == null ? '' : `金額 ${formatYen(mixer35Cost)}`;
-      els.mixer15Flag.style.display = emptyApplied15 ? 'inline-block' : 'none';
-      els.mixer35Flag.style.display = emptyApplied35 ? 'inline-block' : 'none';
+
+      els.mixer15Flag.classList.toggle('hidden', !emptyApplied15);
+      els.mixer35Flag.classList.toggle('hidden', !emptyApplied35);
     }
 
     function refreshAllCards(){
@@ -692,91 +724,13 @@ function refreshTotals(){
     }
 
     function resetAll(){
-      if(!confirm('現在の入力内容をすべて削除して、最初からやり直します。
-
-よろしいですか？')) return;
-      state.shapes=[];
-      state.globalThickness=100;
-      state.wasteRate=0;
-      state.thicknessMode='global';
+      if(!confirm('現在の入力内容をすべて削除して、最初からやり直します。\n\nよろしいですか？')) return;
+      state.shapes = [];
+      state.globalThickness = 100;
+      state.wasteRate = 0;
+      state.thicknessMode = 'global';
       renderAll();
     }
-
-    function escapeHtml(str){
-      return String(str)
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;')
-        .replaceAll("'",'&#039;');
-    }
-    function escapeAttr(str){ return escapeHtml(str); }
-
-    els.globalThickness.addEventListener('input', e => {
-      state.globalThickness = e.target.value;
-      refreshAllCards();
-    });
-    els.wasteRate.addEventListener('change', e => {
-      state.wasteRate = Number(e.target.value);
-      refreshTotals();
-    });
-    els.priceMixer15.addEventListener('input', e => {
-      state.priceMixer15 = e.target.value;
-      refreshTotals();
-    });
-    els.priceMixer35.addEventListener('input', e => {
-      state.priceMixer35 = e.target.value;
-      refreshTotals();
-    });
-    els.priceMesh.addEventListener('input', e => {
-      state.priceMesh = e.target.value;
-      refreshTotals();
-    });
-    els.priceSpacer.addEventListener('input', e => {
-      state.priceSpacer = e.target.value;
-      refreshTotals();
-    });
-    els.emptyFee15.addEventListener('input', e => {
-      state.emptyFee15 = e.target.value;
-      refreshTotals();
-    });
-    els.emptyFee35.addEventListener('input', e => {
-      state.emptyFee35 = e.target.value;
-      refreshTotals();
-    });
-    els.minQty15.addEventListener('input', e => {
-      state.minQty15 = e.target.value;
-      refreshTotals();
-    });
-    els.minQty35.addEventListener('input', e => {
-      state.minQty35 = e.target.value;
-      refreshTotals();
-    });
-    els.togglePriceBtn.addEventListener('click', () => {
-      state.pricePanelOpen = !state.pricePanelOpen;
-      renderAll();
-    });
-    els.modeGlobal.addEventListener('click', () => {
-      state.thicknessMode='global';
-      renderAll();
-    });
-    els.modePer.addEventListener('click', () => {
-      state.thicknessMode='per';
-      state.shapes.forEach(shape => { if(!shape.thickness) shape.thickness = 100; });
-      renderAll();
-    });
-    els.quickButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        state.globalThickness = Number(btn.dataset.thickness);
-        els.globalThickness.value = state.globalThickness;
-        els.quickButtons.forEach(x => x.classList.toggle('active', x === btn));
-        refreshAllCards();
-      });
-    });
-    els.shapeButtons.forEach(btn => {
-      btn.addEventListener('click', () => addShape(btn.dataset.shape));
-    });
-    const STORAGE_KEY = 'doma_calc_price_only_v2';
 
     function saveToBrowser(){
       const data = {
@@ -798,17 +752,17 @@ function refreshTotals(){
     }
 
     function applySavedPricing(data){
-      state.priceMixer15 = data.priceMixer15 ?? '';
-      state.priceMixer35 = data.priceMixer35 ?? '';
+      state.priceMixer15 = data.priceMixer15 ?? 38600;
+      state.priceMixer35 = data.priceMixer35 ?? 36100;
       state.priceMesh = data.priceMesh ?? '';
       state.priceSpacer = data.priceSpacer ?? '';
-      state.emptyFee15 = data.emptyFee15 ?? '';
-      state.emptyFee35 = data.emptyFee35 ?? '';
+      state.emptyFee15 = data.emptyFee15 ?? 3000;
+      state.emptyFee35 = data.emptyFee35 ?? 2000;
       state.minQty15 = data.minQty15 ?? 1.25;
       state.minQty35 = data.minQty35 ?? 3;
     }
 
-    function loadFromBrowser(showAlert = true){
+    function loadFromBrowser(showAlert=true){
       const raw = localStorage.getItem(STORAGE_KEY);
       if(!raw){
         if(showAlert) alert('保存データがありません。');
@@ -827,24 +781,86 @@ function refreshTotals(){
       }
     }
 
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'",'&#039;');
+    }
+    function escapeAttr(str){ return escapeHtml(str); }
+
+    els.globalThickness.addEventListener('input', e => {
+      state.globalThickness = e.target.value;
+      refreshAllCards();
+    });
+    els.wasteRate.addEventListener('change', e => {
+      state.wasteRate = Number(e.target.value);
+      refreshTotals();
+    });
+
+    els.priceMixer15.addEventListener('input', e => { state.priceMixer15 = e.target.value; refreshTotals(); });
+    els.priceMixer35.addEventListener('input', e => { state.priceMixer35 = e.target.value; refreshTotals(); });
+    els.priceMesh.addEventListener('input', e => { state.priceMesh = e.target.value; refreshTotals(); });
+    els.priceSpacer.addEventListener('input', e => { state.priceSpacer = e.target.value; refreshTotals(); });
+    els.emptyFee15.addEventListener('input', e => { state.emptyFee15 = e.target.value; refreshTotals(); });
+    els.emptyFee35.addEventListener('input', e => { state.emptyFee35 = e.target.value; refreshTotals(); });
+    els.minQty15.addEventListener('input', e => { state.minQty15 = e.target.value; refreshTotals(); });
+    els.minQty35.addEventListener('input', e => { state.minQty35 = e.target.value; refreshTotals(); });
+
+    els.modeGlobal.addEventListener('click', () => {
+      state.thicknessMode = 'global';
+      renderAll();
+    });
+    els.modePer.addEventListener('click', () => {
+      state.thicknessMode = 'per';
+      state.shapes.forEach(shape => {
+        if(!shape.thickness && shape.type !== 'manualVolume') shape.thickness = 100;
+      });
+      renderAll();
+    });
+
+    els.quickButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.globalThickness = Number(btn.dataset.thickness);
+        els.globalThickness.value = state.globalThickness;
+        els.quickButtons.forEach(x => x.classList.toggle('active', x === btn));
+        refreshAllCards();
+      });
+    });
+
+    els.togglePriceBtn.addEventListener('click', () => {
+      state.pricePanelOpen = !state.pricePanelOpen;
+      renderAll();
+    });
+
     els.saveBtn.addEventListener('click', saveToBrowser);
     els.loadBtn.addEventListener('click', () => loadFromBrowser(true));
     els.resetBtn.addEventListener('click', resetAll);
+
+    els.shapeButtons.forEach(btn => {
+      btn.addEventListener('click', () => addShape(btn.dataset.shape));
+    });
 
     els.cards.addEventListener('input', e => {
       const id=e.target.dataset.id;
       if(!id) return;
       const shape=state.shapes.find(s => s.id === id);
       if(!shape) return;
+
       if(e.target.dataset.action === 'field'){
         shape.values[e.target.dataset.key] = e.target.value;
         shape.registered = false;
         shape.collapsed = false;
+        shape.errorMessage = '';
       } else if(e.target.dataset.action === 'thickness'){
         shape.thickness = e.target.value;
         shape.registered = false;
         shape.collapsed = false;
+        shape.errorMessage = '';
       }
+
       const card=e.target.closest('.card');
       if(card) refreshCard(card, shape);
       refreshTotals();
@@ -853,9 +869,11 @@ function refreshTotals(){
     els.cards.addEventListener('click', e => {
       const btn=e.target.closest('button[data-action]');
       if(!btn) return;
+
       const id=btn.dataset.id;
       const shape=state.shapes.find(s => s.id === id);
       if(!shape) return;
+
       const action=btn.dataset.action;
 
       if(action === 'delete'){
@@ -864,45 +882,53 @@ function refreshTotals(){
         renderAll();
         return;
       }
+
       if(action === 'copy'){
-        const clone=JSON.parse(JSON.stringify(shape));
-        clone.id=uid();
-        clone.registered=false;
-        clone.collapsed=false;
+        const clone = JSON.parse(JSON.stringify(shape));
+        clone.id = uid();
+        clone.registered = false;
+        clone.collapsed = false;
+        clone.errorMessage = '';
         state.shapes.push(clone);
         renderAll();
         return;
       }
+
       if(action === 'toggle'){
         if(!shape.registered) return;
         shape.collapsed = !shape.collapsed;
         refreshCard(btn.closest('.card'), shape);
         return;
       }
+
       if(action === 'setAdd'){
-        shape.sign=1;
+        shape.sign = 1;
+        shape.errorMessage = '';
         refreshCard(btn.closest('.card'), shape);
         refreshTotals();
         return;
       }
+
       if(action === 'setSubtract'){
-        shape.sign=-1;
+        shape.sign = -1;
+        shape.errorMessage = '';
         refreshCard(btn.closest('.card'), shape);
         refreshTotals();
         return;
       }
+
       if(action === 'register'){
         const error=validateShape(shape);
         const card=btn.closest('.card');
         if(error){
-          shape.registered=false;
-          card.querySelector('.error-text').textContent=error;
+          shape.registered = false;
+          shape.errorMessage = error;
           refreshCard(card, shape);
           return;
         }
-        shape.registered=true;
-        shape.collapsed=true;
-        card.querySelector('.error-text').textContent='';
+        shape.errorMessage = '';
+        shape.registered = true;
+        shape.collapsed = true;
         refreshCard(card, shape);
         refreshTotals();
       }
@@ -911,6 +937,5 @@ function refreshTotals(){
     loadFromBrowser(false);
     renderAll();
   </script>
-
 </body>
 </html>
