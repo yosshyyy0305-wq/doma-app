@@ -58,6 +58,9 @@
     .summary-box .v{font-size:24px;font-weight:900;line-height:1.2}
     .summary-box .s{font-size:13px;font-weight:800;color:var(--muted);margin-top:4px;min-height:18px}
     .summary-box .flag{display:inline-block;margin-top:6px;padding:4px 8px;border-radius:999px;background:#fff1d8;color:var(--warn);border:1px solid var(--warn-line);font-size:12px;font-weight:900}
+    .summary-main{font-size:24px;font-weight:900;line-height:1.2}
+    .summary-inline-sub{font-size:16px;font-weight:800;color:var(--muted)}
+    .summary-inline-rate{font-size:16px;font-weight:800;color:var(--muted)}
     .cards{display:grid;gap:12px}
     .empty{text-align:center;padding:20px;border:1px dashed #adc7e8;border-radius:16px;background:rgba(255,255,255,.7);color:var(--muted);font-weight:800}
     .card.unregistered{border:2px solid var(--warn-line);background:var(--warn-bg);box-shadow:0 10px 30px rgba(168,101,0,.10)}
@@ -85,6 +88,7 @@
       .card-header{flex-direction:column}
       .card-actions{width:100%}
       .card-actions .btn{flex:1}
+      .summary-inline-sub,.summary-inline-rate{font-size:14px}
     }
   </style>
 </head>
@@ -691,15 +695,25 @@
         mixer35Cost = orderedQty * unit35;
       }
 
-      const areaText = (areaDisplay == null && manualVolumeOnly === 0)
-        ? '-- ㎡'
-        : (manualVolumeOnly !== 0
-            ? `${formatSignedArea(areaDisplay == null ? 0 : areaDisplay)} + ${formatSignedVolume(manualVolumeOnly)}`
-            : formatSignedArea(areaDisplay));
+      let areaText;
+      if(areaDisplay == null && manualVolumeOnly === 0){
+        areaText = '-- ㎡';
+      } else if(manualVolumeOnly !== 0){
+        const areaBaseText = formatSignedArea(areaDisplay == null ? 0 : areaDisplay);
+        const volumeAbsText = `${Math.abs(manualVolumeOnly).toFixed(2)} m³`;
+        const joiner = manualVolumeOnly > 0 ? ' + ' : ' − ';
+        areaText = `${areaBaseText}<span class="summary-inline-sub">${joiner}${volumeAbsText}</span>`;
+      } else {
+        areaText = formatSignedArea(areaDisplay);
+      }
 
-      els.totalArea.textContent = areaText;
+      const withWasteText = withWaste == null
+        ? '-- m³'
+        : `<span class="summary-main">${formatVolume(withWaste)}</span> <span class="summary-inline-rate">(${state.wasteRate}%)</span>`;
+
+      els.totalArea.innerHTML = areaText;
       els.totalVolume.textContent = formatVolume(volumeDisplay);
-      els.totalWithWaste.textContent = withWaste == null ? '-- m³' : `${formatVolume(withWaste)} (${state.wasteRate}%)`;
+      els.totalWithWaste.innerHTML = withWasteText;
 
       els.mixer35Count.textContent = mixer35Count != null ? `${mixer35Count} 台` : '--';
       els.mixer15Count.textContent = mixer15Count != null ? `${mixer15Count} 台` : '--';
